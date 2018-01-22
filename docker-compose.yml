@@ -1,0 +1,27 @@
+version: '2'
+services:
+  server:
+    image: thann/kegbot  # x86
+    #image: thann/kegbot:arm7
+    #image: thann/kegbot:arm8
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile
+    #  dockerfile: Dockerfile-arm7
+    #  dockerfile: Dockerfile-arm8
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - db:/usr/src/app/db
+    # Handy for dev
+    #  - ./api:/usr/src/app/api
+    #  - ./webapp:/usr/src/app/webapp
+    #  - ./test:/usr/src/app/test
+    #  - ./lib:/usr/src/app/lib
+    #  - ./db:/usr/src/app/db
+    #command: server --dev
+
+
+volumes:
+  db:

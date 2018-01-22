@@ -1,0 +1,43 @@
+FROM node:alpine AS base
+EXPOSE 3000
+ENTRYPOINT ["node"]
+CMD ["server"]
+
+# Create app directory
+RUN mkdir -p /usr/src/app/dist
+WORKDIR /usr/src/app
+
+# Install updates
+RUN apk update && \
+    apk upgrade
+
+COPY package.json \
+     package-lock.json \
+     /usr/src/app/
+
+# Install build dependencies
+FROM base AS build
+RUN apk add git python make g++
+
+# Install app dependencies
+RUN npm install
+
+# Make app
+FROM base
+COPY --from=build /usr/src/app/node_modules /usr/src/app/node_modules
+
+# Bundle app source
+COPY dist/index.html dist/favicon* /usr/src/app/dist/
+COPY migrations /usr/src/app/migrations
+COPY lib /usr/src/app/lib
+COPY api /usr/src/app/api
+COPY webapp /usr/src/app/webapp
+COPY test /usr/src/app/test
+COPY server.js \
+     webpack.config.js \
+     .eslintrc.json \
+     .eslintfiles \
+     /usr/src/app/
+
+# Build webapp
+RUN node_modules/.bin/webpack

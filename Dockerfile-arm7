@@ -1,0 +1,35 @@
+FROM arm32v7/node
+EXPOSE 3000
+ENTRYPOINT ["node"]
+CMD ["server"]
+
+# Install dependencies
+RUN apt update && \
+    apt upgrade -y
+
+# Create app directory
+RUN mkdir -p /usr/src/app/dist
+WORKDIR /usr/src/app
+
+# Install app dependencies
+COPY package.json \
+     package-lock.json \
+     /usr/src/app/
+
+RUN npm install
+
+# Bundle app source
+COPY dist/index.html dist/favicon* /usr/src/app/dist/
+COPY migrations /usr/src/app/migrations
+COPY lib /usr/src/app/lib
+COPY api /usr/src/app/api
+COPY webapp /usr/src/app/webapp
+COPY test /usr/src/app/test
+COPY server.js \
+     webpack.config.js \
+     .eslintrc.json \
+     .eslintfiles \
+     /usr/src/app/
+
+# Build
+RUN node_modules/.bin/webpack

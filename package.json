@@ -1,0 +1,56 @@
+{
+  "name": "kegbot",
+  "version": "0.0.1",
+  "description": "Monitor a kegerator.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Thann/Kegbot.git"
+  },
+  "bin": "server.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node server --build",
+    "test": "mocha",
+    "lint": "eslint $(cat .eslintfiles)",
+    "dkstart": "docker-compose up -d",
+    "dkstop": "docker-compose down",
+    "dktest": "docker-compose exec server npm run -s test",
+    "dklint": "docker-compose exec server npm run -s lint"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.1",
+    "backbone": "^1.3.2",
+    "backbone-subviews": "github:thann/backbone.subviews",
+    "backbone.localstorage": "^1.1.16",
+    "body-parser": "^1.17.2",
+    "bootstrap": "^3.3.6",
+    "compression-webpack-plugin": "^1.1.3",
+    "css-loader": "^0.28.9",
+    "eslint": "^4.8.0",
+    "eslint-loader": "^1.9.0",
+    "express": "^4.15.4",
+    "express-ws": "^3.0.0",
+    "font-awesome": "^4.5.0",
+    "hanson": "^1.1.1",
+    "hson-loader": "^2.0.0",
+    "imports-loader": "^0.7.1",
+    "jquery": "^3.3.1",
+    "node-getopt": "^0.2.3",
+    "node-sass": "^4.7.2",
+    "querystring": "^0.2.0",
+    "rivets": "github:blikblum/rivets#971a83581611d125bb78f10a822d20b67b8d2b88",
+    "rivets-backbone-adapter": "^2.2.0",
+    "rpi-gpio": "^0.9.1",
+    "sass-loader": "^6.0.6",
+    "sqlite": "^2.8.0",
+    "style-loader": "^0.19.1",
+    "webpack": "^3.10.0",
+    "ws": "^4.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^5.0.0",
+    "supertest": "github:thann/supertest"
+  }
+}
